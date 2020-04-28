@@ -221,7 +221,7 @@ const navigator = createStackNavigator({
 
 });
 
-// EXPORT APP CONTAINNER WAND SWITCH NAVIGATOR
+// EXPORT APP CONTAINNER AND SWITCH NAVIGATOR
 export default createAppContainer(
   (
     createSwitchNavigator({

@@ -1,5 +1,5 @@
 
-//PUBLIC ORDER DETAILS SCREEN. SCREEN BEF
+//PUBLIC ORDER DETAILS SCREEN TO CHECKOUT FUNCTION
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';

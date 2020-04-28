@@ -1,4 +1,4 @@
-//GENERATE ORDER DETAILS FOR CAFE AND DRIVER SCREENS
+//GENERATE ORDER DETAILS
 
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity, PixelRatio,Alert } from 'react-native';
@@ -68,7 +68,7 @@ class OrderMenu extends Component {
             }
         });
     }
-
+//complete order function for cafes and drivers
     updateOrder() {
         this.setState({
             isLoading: true,
@@ -77,14 +77,14 @@ class OrderMenu extends Component {
         const orderkey = this.props.navigation.getParam('orderkey');
         console.group(orderkey);
         const updateDBRef = firebase.firestore().collection('Orders').doc(orderkey);
-
+        //UPDATE DATABASE REFERENCE TO COMPLETE ORDERS 
         updateDBRef.update({ status: 'completed' }).then((docRef) => {
             this.props.navigation.navigate('Orders');
             Alert.alert(
                 'Update Order',
                 'Order Updated Successfuly ',
                 [
-                    { text: 'Ok', onPress: () => console.log('No item was removed'), style: 'cancel' },
+                    { text: 'Ok', onPress: () => console.log('COMPLETED'), style: 'cancel' },
                 ],
                 {
                     cancelable: true
@@ -99,7 +99,7 @@ class OrderMenu extends Component {
             });
     }
 
-
+    //CALCULATE TOTAL 
     calcTotal = (orderItems) => {
         let total = 0;
         orderItems.forEach(item => {
@@ -108,7 +108,7 @@ class OrderMenu extends Component {
         return total.toFixed(2);
     }
 
-
+    //RENDER MIDDLE TABLE WITH ITEMS AND QUNTITY 
     _renderOrderItems = ({ item }) => {
 
         return (
@@ -143,7 +143,7 @@ class OrderMenu extends Component {
                         </TouchableOpacity>
                     </Left>
                     <Body>
-                        <Title>Orders D</Title>
+                        <Title>Order Details</Title>
                     </Body>
                     <Right></Right>
                 </Header>
