@@ -1,3 +1,5 @@
+//GENERATE ORDER DETAILS FOR CAFE AND DRIVER SCREENS
+
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity, PixelRatio,Alert } from 'react-native';
 import * as firebase from 'firebase';
@@ -32,7 +34,11 @@ class OrderMenu extends Component {
         };
     }
 
-
+//GET ORDER KEY PARAM FROM PREVIOUS SCREEN
+// SET FIREBASE REF
+//PUSH ORDER TO STATE TO DISPLAY ITEMS 
+//IF STATEMENT IF NOT DOC FOUND
+//SET LOAD TO FALSE IF WORKED
     componentDidMount() {
         // if(data) console.log(data.name); // => Job here
         console.log("NAV: ", this.props.navigation)
@@ -137,7 +143,7 @@ class OrderMenu extends Component {
                         </TouchableOpacity>
                     </Left>
                     <Body>
-                        <Title>Orders Detail</Title>
+                        <Title>Orders D</Title>
                     </Body>
                     <Right></Right>
                 </Header>

@@ -1,3 +1,5 @@
+//CREATE PUBLIC HOMEPAGE
+//IMPORT PACKAGES
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, ActivityIndicator } from 'react-native';
 import { TouchableOpacity } from 'react-native';
@@ -17,13 +19,10 @@ import { emptyCart } from '../actions/cartAction';
 
 import AsyncImage from '../Components/public/AsyncImageComponent';
 
-
-
-
-
 class Menus extends Component {
   constructor(props) {
     super(props);
+    //SET STATE VARIABLES AND FIREBASE COLLECTION
     this.firestoreRef = firebase.firestore().collection('Cafes')
     this.state = {
       isLoading: true,
@@ -32,7 +31,7 @@ class Menus extends Component {
     };
   }
 
-
+//ON SCREEN LOAD GET CAFE COLLECTION
   componentDidMount() {
     this.cafes = this.firestoreRef.onSnapshot(this.getCollection);
   }
@@ -40,12 +39,13 @@ class Menus extends Component {
   componentWillUnmount() {
     this.cafes();
   }
-
+//GET CAFE COLLECTION TO SHOW DATA AND SET STATE
+// LOG MENU IF WORKED
   getCollection = (querySnapshot) => {
     const cafes = [];
     querySnapshot.forEach((res) => {
       const { CafeName } = res.data();
-      console.log("Menusss");
+      console.log("Menu");
 
       console.log(res.data());
 
@@ -60,12 +60,12 @@ class Menus extends Component {
       isLoading: false,
     });
   }
-
+//FUNCTION TO NAVIGATE TO RELEVANT MENU OF THAT CAFE WILL PASS DATA
   navigateToMenu = (item) => {
     this.props.navigation.navigate("OrderMenu", { cafeid: item.key, cafename: item.CafeName })
   }
 
-
+//GET IMAGES FROM FIREBASE STORAGE
   _getImages = async () => {
 
     const ref = firebase.storage().ref('Cafes/jitters.jpg');
@@ -75,8 +75,8 @@ class Menus extends Component {
 
 
   }
+  //RENDER CARDS SO THAT EACH IMAGE AND DATA WILL APPEAR ON CARD
   _renderItem = ({ item }) => {
-    // this._getImages();
     const imagename = item.CafeName.replace(' ', '').toLowerCase();
     console.log(imagename);
     return (
@@ -100,7 +100,7 @@ class Menus extends Component {
   }
 
 
-
+//RENDER ON SCREEN OBJECTS
   render() {
     return (
       <>
@@ -141,7 +141,7 @@ class Menus extends Component {
     );
   }
 }
-
+//APPLY STYLE 
 const styles = StyleSheet.create({
   containner: {
     flex: 1,

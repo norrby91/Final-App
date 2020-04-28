@@ -52,7 +52,7 @@ import OrderDetailScreen from '../Screens/OrderDetailScreen';
 // disable yellow warning box 
 console.disableYellowBox = true
 
-/*********************************Public Workflow****************************/
+/*********************************PUBLIC SCREEN****************************/
 const menuStackNavigator = createStackNavigator({
   Home: { screen: Menus },
   OrderMenu: { screen: OrderMenu },
@@ -94,9 +94,9 @@ const PublicDrawerNavigation = createDrawerNavigator({
     contentComponent: PublicSideBar,
   });
 
-/*********************************Public Workflow****************************/
+/*********************************PUBLIC SCREEN****************************/
 
-/*********************************Cafe Workflow****************************/
+/*********************************CAFE SCREEN****************************/
 
 
 const cafeLatestOrderStackNavigator = createStackNavigator({
@@ -155,11 +155,11 @@ const CafeDrawerNavigation = createDrawerNavigator({
     // edgeWidth: 0
   });
 
-/*********************************Cafe Workflow****************************/
+/*********************************CAFE SCREEN****************************/
 
 
 
-/*********************************Driver Workflow****************************/
+/*********************************DRIVER SCREEN****************************/
 
 
 const driverLatestOrderStackNavigator = createStackNavigator({
@@ -194,44 +194,8 @@ const DriverDrawerNavigation = createDrawerNavigator({
     // edgeWidth: 0
   });
 
-/*********************************Driver Workflow****************************/
+/*********************************DRIVER SCREEN****************************/
 
-
-
-
-// const TabNavigator = createBottomTabNavigator(
-//   {
-//     Home: {
-//       screen: HomeScreen,
-//       navigationOptions: {
-//         TabBarIcon: ({ tintColor }) => <Icon
-//           name='heartbeat'
-//           type='font-awesome'
-//           color='#f50' size={24} color={tintColor} />
-//       }
-//     },
-//     // Menus: {
-//     //   screen: menuStackNavigator,
-//     //   navigationOptions: {
-//     //     TabBarIcon: ({ tintColor}) => <Icon name="ios-chatbox" size={24} color={tintColor}/>
-//     //   }
-//     // },
-//     // MyAccount: {
-//     //   screen: MyAccount,
-//     //   navigationOptions: {
-//     //     TabBarIcon: ({ tintColor }) => <Icon name="ios-add-circle" size={24} color={tintColor} />
-//     //   },
-//     // }
-//   },
-//   {
-//     tabBarOptions: {
-//       activeTintColor: "tomato",
-//       inactiveTintColor: "#blue",
-//       showLabel: true
-//     }
-
-//   }
-// );
 
 const authStackNavigator = createStackNavigator({
   Login: { screen: LoginScreen },
@@ -245,32 +209,24 @@ const authStackNavigator = createStackNavigator({
 
 const navigator = createStackNavigator({
   Home: HomeScreen,
-  // Login: LoginScreen,
-  // Register: RegisterScreen,
-  // MyAccount: MyAccount,
+  
   AddMenuItem: AddMenuItem,
-  // Menus: Menus,
-  // OrderMenu: OrderMenu,
-
   LoadingScreen: LoadingScreen,
 
   AddDriver: AddDriver,
   ViewDriver: ViewDriver,
   ViewMenuItems: ViewMenuItems,
-  // DriverDetails: DriverDetails,
+ 
 
 
 });
 
-// const App = createAppContainer(TabNavigator);
+// EXPORT APP CONTAINNER WAND SWITCH NAVIGATOR
 export default createAppContainer(
   (
     createSwitchNavigator({
       AuthLoading: AuthLoadingScreen,
       Auth: authStackNavigator,
-      // Loading: LoadingScreen,
-      // App: TabNavigator,
-      // Auth: navigator,
       Public: PublicDrawerNavigation,
       Cafe: CafeDrawerNavigation,
       Driver: DriverDrawerNavigation

@@ -1,3 +1,5 @@
+//USER DETAILS PAGE ON ACCOUNT
+//IMPORT PACKAGES
 import React, { Component } from 'react';
 import { Container, Header, Content, Footer, FooterTab, Left, Right, ListItem, Body, Title, Card, CardItem, Thumbnail, Button } from 'native-base';
 import { View, StyleSheet, Text, TouchableOpacity, Alert, TextInput, ActivityIndicator } from 'react-native';
@@ -19,6 +21,7 @@ class MyAccount extends React.Component {
 
   constructor() {
     super();
+    //SET STATE
     this.state = {
       name: null,
       email: null,
@@ -26,7 +29,8 @@ class MyAccount extends React.Component {
       isLoading: true
     };
   }
-
+//ON SCREEN LOAD GET COLLECTION BY FINDING USERS UID ON FIRESTORE
+//SET THIS DATA TO STATE
   componentDidMount() {
     console.log("Component Mount");
     const { uid } = this.props.logindetails;
@@ -49,7 +53,8 @@ class MyAccount extends React.Component {
       console.log(this.state);
     });
   }
-
+//CREATE FUNCTION TO UPDATE DATA OF USER DETAILS
+// ALERT USER IT WORKED OK 
   updateUser() {
     this.setState({
       isLoading: true,
@@ -92,7 +97,7 @@ class MyAccount extends React.Component {
 
 
 
-
+//RENDER OBJECTS ON SCREEN
   render() {
     const { navigate } = this.props.navigation;
     console.log("Props:");
@@ -138,8 +143,6 @@ class MyAccount extends React.Component {
                     value={this.state.email}
                     style={{ height: 35, padding: 5, fontWeight: "bold" }}
                     placeholder={'Enter Email Address'}
-                  // value={this.state.menuitem.foodtypeNo}
-                  // onChangeText={(text) => this.updateTextInput(text, 'foodtypeNo')}
                   />
                 </View>
                 <View style={styles.subContainer}>
@@ -168,7 +171,7 @@ class MyAccount extends React.Component {
     );
   }
 }
-
+//APPLY STYLE
 const styles = StyleSheet.create({
   container: {
     flex: 1,

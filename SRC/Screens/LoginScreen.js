@@ -12,11 +12,13 @@ import { callLoginService } from '../actions/authentication/signInAction';
 
 class Login extends React.Component {
   state = {
+    //SET EMAIL AND PASSWORD 
     email: "",
     password: "",
   }
 
-
+//GET COLLECCTION AND SNAPSHOT
+//CONSOLE LOG TO CHECK IF WORKED
   getCollection = (querySnapshot) => {
     const userArr = [];
     querySnapshot.forEach((res) => {
@@ -25,7 +27,7 @@ class Login extends React.Component {
     });
   }
 
-
+//HANDLES STATE OF LOGIN
   handleLogin = async () => {
     const { email, password } = this.state;
     
@@ -34,8 +36,9 @@ class Login extends React.Component {
       password: password
     }, this.props.navigation);
   }
+  //RENDER OBJECTS ON SCREEN
   render() {
-
+    //EASE IN AND OUT OF SCREEN
     LayoutAnimation.easeInEaseOut();
 
     return (
@@ -83,13 +86,16 @@ class Login extends React.Component {
     )
   }
 }
-
+//MAP PROPS TO STATE 
+//SHOW ERROR MESSAGE 
 const mapStateToProps = (state) => ({
   errormessage: state.SignInReducer.errormessage,
 });
-
+//EXPORT CLASS AND CONNECT TO REDUX 
 export default connect(mapStateToProps, { loaderStatus, callLoginService })(Login);
 
+
+//APPLY STYLES TO OBJECTS 
 const styles = StyleSheet.create({
   containner: {
     flex: 1,

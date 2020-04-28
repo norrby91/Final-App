@@ -1,3 +1,5 @@
+
+//PUBLIC ORDER DETAILS SCREEN. SCREEN BEF
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
@@ -31,7 +33,7 @@ class OrderDetails extends Component {
 
     };
   }
-
+//RENDER ORDER FROM PREVIOUS SCREEN AND ADD QUANTITY OR SUBTRACT
   renderItem = data =>
     <ListItem
     >
@@ -42,7 +44,6 @@ class OrderDetails extends Component {
             justifyContent: "center",
             resizeMode: "stretch",
             height: 75,
-            // width: 75,
             flex: 1,
             borderRadius: 5,
           }}
@@ -70,7 +71,7 @@ class OrderDetails extends Component {
           <View style={{ justifyContent: 'center' }}>
             <Text style={{ fontWeight: "bold", textAlign: "center" }}>{data.item.qty}</Text>
           </View>
-
+          
           <View style={{ justifyContent: 'center', paddingHorizontal: 15 }}>
             <TouchableOpacity
               onPress={() => this.props.changeProductQuantity(data.item.key, data.item.qty + 1, 20)}
@@ -82,9 +83,9 @@ class OrderDetails extends Component {
 
       </Right>
     </ListItem>
-
+  // RENDER ON SCREEN OBJECTS
   render() {
-    // const cartitems = this.props.navigation.getParam('cartitems');
+    
     const { cart, cartTotal } = this.props;
     console.log(this.props);
     return (
