@@ -1,3 +1,5 @@
+//DRIVER EDIT AND DELETE SCREEN
+//IMPORT PACKAGES
 import React, { Component } from 'react';
 import { Alert, StyleSheet, TextInput, ScrollView, ActivityIndicator, View, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
@@ -20,6 +22,7 @@ class DriverDetails extends Component {
   constructor() {
 
     super();
+    //SET STATE AND SET FIRESTORE REFERENCE 
     this.firestoreRef = firebase.firestore().collection('Driver');
     this.state = {
       name: '',
@@ -31,11 +34,15 @@ class DriverDetails extends Component {
       isLoading: true
     };
   }
+  //GET PARAMS FROM PREVIOUS SCREEN VIEW DRIVER
   getNavigationParams() {
     return this.props.navigation.dangerouslyGetParent().getParam('params') || {}
   }
+//LOG NAVIGATION PROPS TO SEE WHAT PASSED
+//SET USER KEY TO GET PARAM 
+//GET COLLECTION AACCORDING TO USER KEY
+//IF THER ISNT A DOCUMENT SHOW THIS
   componentDidMount() {
-    // if(data) console.log(data.name); // => Job here
     console.log("NAV: ", this.props.navigation)
     const userkey = this.props.navigation.getParam('userkey');
     console.group(userkey);
@@ -57,13 +64,19 @@ class DriverDetails extends Component {
       }
     });
   }
-
+  //ON INPUT CHANGE VALUE OF STATE
   inputValueUpdate = (val, prop) => {
     const state = this.state;
     state[prop] = val;
     this.setState(state);
   }
-
+  //UPDATE USER FUNCTION
+  //GET CAFE ID OF DRIVER FROM LOGIN DETAILS
+  //SHOW LOADING SCREEN
+  //UPDATE DATA BASE REFERENCE WITH KEY STATE
+  //ADD NEW STATE TO VARIABLES
+  //ALERT USER THAT UPDATE WAS SUCCESFUL
+  //IF NOT LOG ERROR AS IT DID NOT WORK
   updateUser() {
     const { cafeid } = this.props.logindetails;
     console.log(this.props.logindetails);
@@ -110,6 +123,9 @@ class DriverDetails extends Component {
         });
       });
   }
+//DELETE USER FUNCTION
+//DELETE USER ACCORDING TO KEY 
+//ALERT USER IT WAS REMOVED
 
   deleteUser() {
     console.log(this.state.key);
@@ -129,7 +145,7 @@ class DriverDetails extends Component {
       this.props.navigation.navigate('Drivers');
     })
   }
-
+//SET SECOND ALERT FUNCTION FOR DELTING A USER TO PROMPT THAT ARE SURE 
   openTwoButtonAlert = () => {
     Alert.alert(
       'Delete User',
@@ -143,7 +159,7 @@ class DriverDetails extends Component {
       }
     );
   }
-
+//RENDER OBJECTS ON SCREEN
   render() {
     return (
       <>
@@ -239,7 +255,7 @@ class DriverDetails extends Component {
     );
   }
 }
-
+//APPLY CSS STYLE TO OBJECTS
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,5 +1,5 @@
 // add a new driver to the cafe 
-
+//imported packages
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, TouchableOpacity, Alert } from 'react-native';
 
@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { loaderStatus } from '../actions/loaderAction';
 import LoaderComponent from '../Components/common/loaderComponent'
 
-
+//call in encode decode to read/write to firebase
 if (!global.btoa) { global.btoa = encode }
 
 if (!global.atob) { global.atob = decode }
@@ -28,7 +28,9 @@ class AddDriver extends Component {
       edit: false,
     };
   }
-
+  // ON MOUNT 
+  //ADD LISTENER TO INSERT NEW ENTRIES OR UPDATED ENTIRES
+  //GET PARAMS FROM PREVIOUS PAGE
   componentDidMount() {
     this.driver = this.props.navigation.addListener('willFocus', () => {
       const driver = this.props.navigation.getParam('driver');
@@ -38,18 +40,18 @@ class AddDriver extends Component {
     }
     );
   }
-
+// REMOVE MOUNT FOR FIREBASE
   componentWillUnmount = () => {
     this.driver.remove();
   }
-
+  // WHEN TEXT IS UPDATED CHANGE STATE
   updateTextInput = (text, field) => {
     const driver = this.state.driver;
     driver[field] = text;
     this.setState({ driver: driver });
     console.log(this.state);
   }
-
+  //REMOVE FROM COLLECTION FLAG ERROR IF DELETE NOT POSSIBLE 
   _DriverDelete = () => {
     const dockey = this.state.driver.key;
     this.props.loaderStatus({ status: true, message: 'Driver Deleting...' });
@@ -59,12 +61,16 @@ class AddDriver extends Component {
       this.props.loaderStatus({ status: false, message: null });
       alert("Driver Deleted Successfully!");
     }).catch((error) => {
-      console.error("Error adding document: ", error);
+      console.error("Error deleting document: ", error);
       alert(error.message);
       this.props.loaderStatus({ status: false, message: null });
     });
   }
-
+// CREATE SAVE FOR DRIVER EDIT 
+// VALIDATION ON INPUT 
+//IF OK PUSH TO FIREBASE
+//IF NOT FLAG ERROR MESSAGE 
+//SHOW THAT THE UPDATE WAS SUCCESSFUL
   saveBoard() {
     const { cafeid } = this.props.logindetails;
     const { driver, edit } = this.state;
@@ -90,7 +96,7 @@ class AddDriver extends Component {
         driverNo: driver.driverNo,
         cafeid: cafeid
       }
-      console.log("In data body");
+      console.log("UPDATED");
       console.log(JSON.stringify(data));
 
       this.props.loaderStatus({ status: true, message: edit ? 'Updating Driver...' : 'Adding Driver' });
@@ -123,7 +129,7 @@ class AddDriver extends Component {
       }
     }
   }
-
+  // CREATE A CONFIRM DELETE SO THE USER IS SURE THEY WANT TO DELETE THIS ITEM
   _deleteConfirmation = () => {
     Alert.alert(
       'Alert!',
@@ -136,11 +142,12 @@ class AddDriver extends Component {
     )
   }
 
-
+//RENDER OBJECTS ON SCREEN
   render() {
     const { driver, edit } = this.state;
     return (
       <>
+      
         <Header>
           <Left>
             <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
@@ -224,7 +231,7 @@ class AddDriver extends Component {
     );
   }
 };
-
+// APPLY STYLE TO SCREEN
 const styles = StyleSheet.create({
   container: {
     flex: 1,

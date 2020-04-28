@@ -42,39 +42,41 @@ class CafeLatestOrder extends Component {
     }
 
     //grab collection
+    //CONSOLE LOG DATE & CHECK IF IT MOUNTED
+    //FIND CAFE ID FROM PROPS
+    //AND ENSURE CORRECT COLLECTION
     componentDidMount() {
         const { cafeid } = this.props.logindetails;
         console.log(this.props.logindetails);
         console.log("Component Mount");
-        console.log(new Date('2017-01-01'));
+        console.log(new Date('DATE'));
         const today = new Date();
 
         this.firestoreRef = firebase.firestore().collection('Orders').where('cafeid', '==', cafeid)
         this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection);
         // this.check()
     }
-
+    //FUNCTION TO SELECT ITEMS 
     onSelectionsChange = () => {
 
         this.setState({ selectedItems })
     }
 
-
+    // UNSUBSCRIBE FROM FIREBASE
     componentWillUnmount() {
         this.unsubscribe();
     }
-
+    //LINE SEPERATOR
     renderSeparator = () => <View style={styles.line}>
     </View>
 
 
-
+    //GET COLLECTION FROM FIREBASE AND SET STATE 
     getCollection = (querySnapshot) => {
         const orders = [];
         querySnapshot.forEach((res) => {
             console.log("Orders");
             console.log(res.data());
-            //   const { cafe } = res.data();
             orders.push({
                 key: res.id,
                 ...res.data()
@@ -86,13 +88,13 @@ class CafeLatestOrder extends Component {
         });
         console.log(this.state.orders);
     }
-
+    //LINE FOR TABLE AND OTHER CSS
     FlatListItemSeparator = () => <View style={styles.line} />;
 
     renderOrderItme = (data) => {
 
     }
-
+    //RENDER ITEMS FROM COLLECTION IN TABLE
     _renderOrderItems = ({ item }) => {
         return (
             <View style={{ flexDirection: "row", flex: 1 }}>
@@ -108,7 +110,7 @@ class CafeLatestOrder extends Component {
             </View>
         )
     }
-
+    //CALCULATE TOTAL COST OF ORDER
     _calculateTotal = (orderitems) => {
         let total = 0;
         console.log("Calc value");
@@ -116,12 +118,14 @@ class CafeLatestOrder extends Component {
         // console.log("hello");
         // console.log(JSON.stringify(orderitems[0]));
         orderitems.forEach(item => {
-            // console.log(item.price);
+            // LOOP THAT GOES THROUGH EACH ITEM IN ORDER TO GET TOTAL
             total += parseFloat(item.quantity) * parseFloat(item.price);
         });
+        //RETURN TOTAL
         return total.toFixed(2);
         return total;
     }
+    //RENDER HEADINGS FOR TABLE AN ON SCREEN ITEMS 
     renderOrders = ({ item }) => {
         console.log('render item');
         console.log(item);
@@ -167,7 +171,7 @@ class CafeLatestOrder extends Component {
             </Card>
         )
     }
-
+//RENDER COMPONENTS ON SCREEN SUCH AS HEADERFOOTER
     render() {
         console.log(this.state.cafeid);
         const { params } = this.props.navigation.state;
@@ -206,11 +210,6 @@ class CafeLatestOrder extends Component {
                         orders.length > 0 ?
                             <Content>
                                 <OrderListComponent latest={true} navigation={this.props.navigation} orders={orders} />
-                                {/* <FlatList
-                                    data={orders}
-                                    renderItem={this.renderOrders}
-                                    contentContainerStyle={{ paddingBottom: 120 }}
-                                    keyExtractor={(item, index) => index.toString()} /> */}
                             </Content>
                             :
                             <View style={{
@@ -227,7 +226,7 @@ class CafeLatestOrder extends Component {
         );
     }
 }
-
+//APPLY CSS
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -290,9 +289,9 @@ const styles = StyleSheet.create({
     number: { fontSize: 14, color: "#000" },
     selected: { backgroundColor: "forestgreen" },
 });
-
-// export default withNavigation(OrderMenu);
+//MAP PROPS TO STATE 
 const mapStateToProps = (state) => ({
     logindetails: state.SignInReducer.logindetails
 });
+//EXPORT CLASS AND CONNECT REDUX FOR FUNCTIONS
 export default connect(mapStateToProps, { addToCart, removeItem })(CafeLatestOrder);

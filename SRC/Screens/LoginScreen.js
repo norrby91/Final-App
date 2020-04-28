@@ -1,3 +1,5 @@
+//LOGIN SCREEN FOR USERS
+//IMPORT PACKAGES
 import React from 'react'
 import {
   StyleSheet, Alert, Text, View, TextInput,

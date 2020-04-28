@@ -1,3 +1,7 @@
+//CREATE CHECK OUT SCREEN
+//CUSTOMER WILL BE ABLE TO ENTER DETAILS TO CONFIRM ORDER
+//IMPORT PACKAGES
+
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -25,6 +29,7 @@ class CheckOut extends Component {
 
   constructor() {
     super();
+    //SET STATE FOR ORDER DETAILS
     this.state = {
       paymenttype: "cash",
       ordertype: "collection",
@@ -39,7 +44,7 @@ class CheckOut extends Component {
       deliverytime: new Date()
     };
   }
-
+//PUSH ORDER TO FIREBASE
   saveBoard() {
     let orderitems = [];
     const cafeid = this.props.navigation.getParam('cafeid');
@@ -51,9 +56,9 @@ class CheckOut extends Component {
         price: item.price
       });
     });
-
+//CREATE USER INFO ARRAY
     let userinfo = [];
-
+    //VALIDATION FOR REQUIRED FIELDS
     if (this.state.ordertype == 'delivery') {
       if (this.state.address.trim() == "") {
         alert("Address is required for delivery");
@@ -63,13 +68,14 @@ class CheckOut extends Component {
         alert("Postal Code is required for delivery");
         return false;
       }
+      //APPLY STATE TO USER INFO
       userinfo = {
         address: this.state.address,
         postalcode: this.state.postalcode,
         message: this.state.message
       }
     }
-
+    //CREATE ANOTHER  VARIABLE TO HOLD ON INFORMATION ON 
     const a = {
       userid: this.props.userid,
       cafeid: cafeid,
@@ -80,6 +86,11 @@ class CheckOut extends Component {
       orderdate: new Date(),
       deliverydatetime: this.state.deliverytime
     }
+
+    //SET LOADER STATUS 
+    //ADD COLLECTION TO FIREBASE
+    //NAVIGATE TO ORDER SUCCESS SCREEN 
+    //IF UNSUCCESSFULL FLAG ERROR 
     this.props.loaderStatus({ status: true, message: 'Order sending...' });
     firebase.orderCollection.add(a).then((docRef) => {
       this.props.emptyCart();
@@ -95,16 +106,22 @@ class CheckOut extends Component {
       });
 
   }
-
+  //FUNCTION TO APPLY TIME TO ORDER
+  //APPLY SECTED DATE/TIME TO DATE CONST
+  //CHECK IF DATE IS CORRECT
+  //CONSOLE LOG TIME 
   onTimeChange = (event, selectedDate) => {
     console.log(event);
     const date = selectedDate || new Date();
     console.log(selectedDate);
     this.setState({ deliverytime: date, showtimepicker: false })
-    console.log("date");
+    console.log("TIME");
     console.log(this.state.deliverytime);
   };
-
+   //FUNCTION TO APPLY DATE TO ORDER
+  //APPLY SECTED DATE/TIME TO DATE CONST
+  //CHECK IF DATE IS CORRECT
+  //CONSOLE LOG DATE
   onDateChange = (event, selectedDate) => {
     console.log(event);
     const date = selectedDate || new Date();
@@ -117,16 +134,16 @@ class CheckOut extends Component {
     setShow(true);
     setMode(currentMode);
   };
-
+//ENABLE DATE PICKER
   showDatepicker = () => {
     this.setState({ showdatepicker: true, mode: 'date' })
   };
-
+  //ENABLE TIME PICKER
   showTimepicker = () => {
     this.setState({ showtimepicker: true, mode: 'time' })
   };
 
-
+  //RENDER CHANGE QUANTITY OBJECTS
   renderItem = data =>
     <ListItem
     >
@@ -166,7 +183,7 @@ class CheckOut extends Component {
 
       </Right>
     </ListItem>
-
+  //RENDER OBJECTS ON SCREEN 
   render() {
     // const cartitems = this.props.navigation.getParam('cartitems');
     const { cart, cartTotal } = this.props;
@@ -257,15 +274,6 @@ class CheckOut extends Component {
             </View>
             <View style={{ marginHorizontal: 15, borderRadius: 5, borderWidth: 1, borderColor: "#e7e7e7" }}>
               <View style={{ padding: 13, }}>
-
-                {/* <TouchableOpacity onPress={() => this.showDatepicker()}>
-                  <Input
-                    disabled
-                    value={this.state.address}
-                    onChangeText={(value) => this.setState({ address: value })}
-                    placeholder={'Delivery Date'}
-                    style={{ borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, fontSize: 13, height: 35, fontWeight: "bold", paddingLeft: 5, borderColor: "lightgrey" }} />
-                </TouchableOpacity> */}
                 {
                   this.state.showtimepicker ?
                     <DateTimePicker
@@ -296,7 +304,6 @@ class CheckOut extends Component {
                   <Input
                     disabled
                     value={this.state.deliverydate.toString().substring(4, 15)}
-                    // onChangeText={(value) => this.setState({ postalcode: value })}
                     placeholder={'Delivery Date'}
                     style={{ marginTop: 15, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, fontSize: 13, height: 35, fontWeight: "bold", paddingLeft: 5, borderColor: "lightgrey" }} />
                 </TouchableOpacity>
@@ -305,7 +312,6 @@ class CheckOut extends Component {
                   <Input
                     disabled
                     value={this.state.deliverytime.toString().substring(15, 21)}
-                    // onChangeText={(value) => this.setState({ postalcode: value })}
                     placeholder={'Delivery Time'}
                     style={{ marginTop: 15, borderWidth: 1, paddingHorizontal: 5, borderRadius: 5, fontSize: 13, height: 35, fontWeight: "bold", paddingLeft: 5, borderColor: "lightgrey" }} />
                 </TouchableOpacity>
@@ -313,7 +319,7 @@ class CheckOut extends Component {
               </View>
             </View>
           </>
-
+      
         </Content>
         <Footer style={{ height: 100 }}>
           <FooterTab style={{ borderRadius: 0 }}>
@@ -360,6 +366,7 @@ class CheckOut extends Component {
     )
   }
 }
+//APPLY CSS TO SCREEN
 const styles = StyleSheet.create({
   container: {
     flex: 1,

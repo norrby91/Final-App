@@ -1,3 +1,6 @@
+//PAGE NO LONGER IN USE 
+//THIS WAS THE FIRST HOME PAGE CREATED FOR DEMO PURPOSES 
+
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Button, StatusBar, Image, TouchableOpacity } from 'react-native';
 

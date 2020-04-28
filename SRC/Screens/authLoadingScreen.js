@@ -1,3 +1,5 @@
+//LOADING SCREEN
+//IMPORT PACKAGES
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
@@ -22,15 +24,12 @@ class AuthLoadingScreen extends Component {
         super();
         this._bootstrapAsync();
     }
+    //ON LOAD FIND OUT LOGIN DETAILS AND CHECK LEVEL OF USER AUTH AND MOVE TO CORRECT SCREEN
     _bootstrapAsync = async () => {
         let loginDetail = JSON.parse(await AsyncStorage.getItem("loginDetail"));
         console.log(loginDetail);
         if (loginDetail !== null === true) {
             console.log(loginDetail.uid);
-            // const query = firebase.firestore().collection('Users').where('userid', '==', loginDetail.uid).get();
-            // query.then((result) => {
-
-
             const now = new Date();
             const localStorage = loginDetail
             console.log(loginDetail);
@@ -47,8 +46,6 @@ class AuthLoadingScreen extends Component {
             else {
                 this.props.navigation.navigate('Auth')
             }
-            // ******** save login detail into local storage *********//
-            // AsyncStorage.setItem("loginDetail", JSON.stringify(localStorage));
         }
         else {
             this.props.navigation.navigate('Auth');
@@ -57,6 +54,7 @@ class AuthLoadingScreen extends Component {
     }
     componentDidMount() {
     }
+    //RENDER OBJECTS ON SCREEN
     render() {
         return (
             <>
@@ -74,7 +72,5 @@ class AuthLoadingScreen extends Component {
     }
 }
 
-// const mapStateToProps = (state) => ({
-//     errorSimulate: state.ErrorSimulateReducer.detail,
-// });
+//EXPORT CLASSS AND CONNECT TO REDUX STORE
 export default connect(null, { callLoginService, loginServiceSuccess })(AuthLoadingScreen);

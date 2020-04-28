@@ -1,5 +1,5 @@
-//add new items to menus 
-
+//ADD NEW MENU ITEMS 
+//IMPORT PACKAGES
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, TouchableOpacity, Alert, Image, Dimensions } from 'react-native';
 
@@ -22,12 +22,11 @@ import ImagePicker from 'react-native-image-picker';
 // if (!global.btoa) { global.btoa = encode }
 
 // if (!global.atob) { global.atob = decode }
-
+//GET WIDTH OF SCREEN TO MAKE CSS LOOK BETTER 
 const screenWidth = Math.round(Dimensions.get('window').width);
-
+//IMAGE PICKER CONST
 const options = {
   title: 'Select Menu Image',
-  // customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
   storageOptions: {
     skipBackup: true,
     path: 'images',
@@ -37,7 +36,7 @@ const options = {
 class AddMenuItem extends Component {
   constructor() {
     super();
-
+//SET STATE 
     this.state = {
       menuitem: [],
       edit: false,
@@ -45,7 +44,9 @@ class AddMenuItem extends Component {
       avatarSource: null
     };
   }
-
+  // ON MOUNT 
+  //ADD LISTENER TO INSERT NEW ENTRIES OR UPDATED ENTIRES
+  //GET PARAMS FROM PREVIOUS PAGE
   componentDidMount = () => {
     this.menu = this.props.navigation.addListener('willFocus', () => {
       const menu = this.props.navigation.getParam('menu');
@@ -57,11 +58,11 @@ class AddMenuItem extends Component {
     }
     );
   }
-
+//SET UNMOUNT TO REMOVE ITEMS 
   componentWillUnmount = () => {
     this.menu.remove();
   }
-
+//CREATE DELETE FUNCTION
   _deleteConfirmation = () => {
     Alert.alert(
       'Alert!',
@@ -73,7 +74,7 @@ class AddMenuItem extends Component {
       { cancelable: false }
     )
   }
-
+ //REMOVE FROM COLLECTION FLAG ERROR IF DELETE NOT POSSIBLE 
   _MenuDelete = () => {
     const menuid = this.state.menuitem.key;
     this.props.loaderStatus({ status: true, message: 'Item Deleting...' });
@@ -87,7 +88,7 @@ class AddMenuItem extends Component {
       this.props.loaderStatus({ status: false, message: null });
     });
   }
-
+  // WHEN TEXT IS UPDATED CHANGE STATE
   updateTextInput = (text, field) => {
     const menuitem = this.state.menuitem;
     menuitem[field] = text;
@@ -95,7 +96,12 @@ class AddMenuItem extends Component {
     console.log("State change");
     console.log(this.state);
   }
-
+// CREATE SAVE FOR DRIVER EDIT 
+// VALIDATION ON INPUT 
+//IF OK PUSH TO FIREBASE
+//IF NOT FLAG ERROR MESSAGE 
+//SHOW THAT THE UPDATE WAS SUCCESSFUL
+//USE BLOB TO ENTER IMAGE 
   saveBoard() {
     const edit = this.state.edit;
     if (this.state.menuitem.name == '' || this.state.menuitem.name == null) {
@@ -194,7 +200,7 @@ class AddMenuItem extends Component {
       }
     }
   }
-
+  // USE BOB TO CALL IN IMAGE URI 
   uriToBlob = (uri) => {
     console.log("Call uriToBlob Method");
     return new Promise((resolve, reject) => {
@@ -211,7 +217,7 @@ class AddMenuItem extends Component {
         reject(new Error('uriToBlob failed'));
       };
 
-      // this helps us get a blob
+      //  get a blob
       xhr.responseType = 'blob';
 
       xhr.open('GET', uri, true);
@@ -220,7 +226,7 @@ class AddMenuItem extends Component {
     });
 
   }
-
+  // UPLOAD IMAGE TO FIREBASE STORAGE WITH PATH AND BLOB 
   uploadToFirebase = (blob, path) => {
     console.log("uploadToFirebase");
     console.log(blob);
@@ -245,7 +251,7 @@ class AddMenuItem extends Component {
     });
   }
 
-
+// IMAGE PICKER FUNCTION WITH VALIDATION
   _selectImage = () => {
     ImagePicker.showImagePicker(options, (response) => {
       console.log('Response = ', response);
@@ -260,20 +266,15 @@ class AddMenuItem extends Component {
         const { height, width, type, uri } = response;
         const source = response.uri;
         console.log(source);
-        // this.uriToBlob(uri).then(blob => {
-        //   this.uploadToFirebase(blob);
-        // })
-        // You can also display the image using data:
-        // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-        this.setState({
+         this.setState({
           avatarSource: source,
         });
       }
     });
   }
-
+  // RENDER OBJECTS ON SCREEN 
   render() {
+    //SET STATE AND LOG TO SEE IF IT WORKED 
     console.log(this.state);
     const menuimage = this.state.menuimage;
     const avatarSource = this.state.avatarSource;
@@ -410,7 +411,7 @@ class AddMenuItem extends Component {
     );
   }
 };
-
+// APPLY STYLES 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -435,7 +436,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 })
+//APPLY PROPS TO STATE 
 const mapStateToProps = (state) => ({
   logindetails: state.SignInReducer.logindetails,
 });
+// EXPORT CLASS AND CONNECT TO REDUX 
 export default connect(mapStateToProps, { loaderStatus })(AddMenuItem);
