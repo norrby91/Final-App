@@ -22,6 +22,14 @@ import { useNavigation } from '@react-navigation/native';
 import { withNavigation } from 'react-navigation';
 
 
+const dummyMenu = {
+  name: null,
+  email: null,
+  phonenumber: null,
+  address: null,
+  driverNo: null,
+}
+
 
 class ViewDriver extends Component {
 
@@ -80,7 +88,7 @@ class ViewDriver extends Component {
   render() {
     return (
       <>
-        <Header style={{ backgroundColor: '#C1E319' }}>
+        <Header>
           <Left>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')}>
               <MaterialIcons name="arrow-back" size={25} color="#fff" />
@@ -122,8 +130,9 @@ class ViewDriver extends Component {
                         </View>}
                         body={item.driverNo}
                         onPress={() => {
-                          this.props.navigation.navigate('DriverDetails', {
-                            userkey: item.key
+                          this.props.navigation.navigate('DriverForm', {
+                            driver: item,
+                            edit: true
                           });
                         }} />
                     );
@@ -136,8 +145,16 @@ class ViewDriver extends Component {
                 containerStyle={{}}
                 style={{ backgroundColor: '#4CAF50' }}
                 position="bottomRight"
-                onPress={() => this.props.navigation.navigate('DriverForm')}>
-
+                onPress={() => this.props.navigation.navigate('DriverForm', {
+                  driver: {
+                    name: null,
+                    email: null,
+                    phonenumber: null,
+                    address: null,
+                    driverNo: null,
+                  },
+                  edit: false
+                })}>
                 <Ionicons name="md-add" color="#FFF" size={14} />
               </Fab>
             </>
