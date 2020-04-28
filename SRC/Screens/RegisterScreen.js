@@ -1,3 +1,4 @@
+//register user screen
 import React from 'react'
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, StatusBar, Image, LayoutAnimation } from 'react-native';
 import { connect } from 'react-redux';
@@ -5,14 +6,14 @@ import { connect } from 'react-redux';
 import { signUpSubmit } from '../actions/authentication/signUpAction';
 
 class RegisterScreen extends React.Component {
-
+  //set state
   state = {
     name: "",
     email: "",
     password: "",
     errormessage: null,
   }
-
+  // handle sign up function
   handleSignUp = () => {
     const { name, email, password } = this.state
     const data = {
@@ -23,7 +24,7 @@ class RegisterScreen extends React.Component {
     this.props.signUpSubmit(data, this.props.navigation);
   }
 
-
+//render on screen objects
   render() {
 
     LayoutAnimation.easeInEaseOut();
@@ -62,10 +63,6 @@ class RegisterScreen extends React.Component {
             value={this.state.password}
           />
         </View>
-
-        {/* <View style={styles.errormessage}>
-          {this.state.errormessage && <Text style={styles.error}>{this.state.errormessage} </Text>}
-        </View> */}
         {
           this.props.errormessage !== null ?
             <View style={styles.errormessage}>
@@ -88,14 +85,14 @@ class RegisterScreen extends React.Component {
   }
 }
 
-
+//connect to redux 
 const mapStateToProps = (state) => ({
   errormessage: state.SignUpReducer.errormessage,
 });
-
+//export class 
 export default connect(mapStateToProps, { signUpSubmit })(RegisterScreen);
 
-
+//apply styles
 const styles = StyleSheet.create({
   containner: {
     flex: 1,

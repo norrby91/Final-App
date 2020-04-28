@@ -1,3 +1,5 @@
+//view driver  screen
+//import packages
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Alert, TouchableOpacity } from 'react-native';
 
@@ -21,7 +23,7 @@ if (!global.atob) { global.atob = decode }
 import { useNavigation } from '@react-navigation/native';
 import { withNavigation } from 'react-navigation';
 
-
+//create constant variables 
 const dummyMenu = {
   name: null,
   email: null,
@@ -32,7 +34,7 @@ const dummyMenu = {
 
 
 class ViewDriver extends Component {
-
+//set state
   constructor() {
     super();
     this.state = {
@@ -41,7 +43,7 @@ class ViewDriver extends Component {
       data: "",
     };
   }
-
+//on press navigate to driver details function
   onPress(item, index) {
     if (item.userArr.length < item.limit) {
       this.props.navigation.navigate("DriverDetails", {
@@ -49,22 +51,24 @@ class ViewDriver extends Component {
       })
     } else Alert.alert("No Driver Available")
   }
-
+//hard coded driver details navigation 
   GoToButton({ DriverDetails }) {
     const navigation = useNavigation();
   }
-
+//on screen open
+//set state
+//get driver = cafe id 
   componentDidMount() {
     const { cafeid } = this.props.logindetails;
     console.log(this.props.logindetails);
     this.firestoreRef = firebase.firestore().collection('Driver').where('cafeid', '==', cafeid);
     this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection);
   }
-
+//unsubscribe from firebase
   componentWillUnmount() {
     this.unsubscribe();
   }
-
+//get collection and push data into variables
   getCollection = (querySnapshot) => {
     const userArr = [];
     querySnapshot.forEach((res) => {
@@ -84,7 +88,7 @@ class ViewDriver extends Component {
       isLoading: false,
     });
   }
-
+//render on screen objects
   render() {
     return (
       <>
@@ -163,7 +167,7 @@ class ViewDriver extends Component {
     );
   }
 }
-
+//appply css
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -179,8 +183,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 })
-
+//map state to props 
 const mapStateToProps = (state) => ({
   logindetails: state.SignInReducer.logindetails
 });
+//connect to redux
 export default connect(mapStateToProps, {})(ViewDriver);

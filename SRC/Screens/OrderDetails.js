@@ -156,6 +156,7 @@ class OrderDetails extends Component {
     )
   }
 }
+//apply css to screen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

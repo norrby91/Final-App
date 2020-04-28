@@ -1,3 +1,6 @@
+//View menu item screen
+//import packages
+
 import React, { Component } from 'react';
 import { View, StyleSheet, Button, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,7 +26,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { loaderStatus } from '../actions/loaderAction';
 import LoaderComponent from '../Components/common/loaderComponent'
-
+//set constant for variables
 const dummyMenu = {
   name: null,
   price: null,
@@ -35,16 +38,13 @@ class ViewMenuItems extends Component {
 
   constructor() {
     super();
-
+//set state
     this.state = {
       isLoading: true,
       userArr: []
     };
   }
-  GoToButton({ HomeScreen }) {
-    const navigation = useNavigation();
-  }
-
+// on screen load get menu = cafe id 
   componentDidMount() {
     const { cafeid } = this.props.logindetails;
     console.log(this.props.logindetails);
@@ -52,11 +52,11 @@ class ViewMenuItems extends Component {
     this.firestoreRef = firebase.firestore().collection('Menus').where('cafeid', '==', cafeid);
     this.unsubscribe = this.firestoreRef.onSnapshot(this.getCollection);
   }
-
+  //unsubscribe from firebase 
   componentWillUnmount() {
     this.unsubscribe();
   }
-
+  //get collection and push into variables
   getCollection = (querySnapshot) => {
     const userArr = [];
     querySnapshot.forEach((res) => {
@@ -79,9 +79,9 @@ class ViewMenuItems extends Component {
 
  
 
-  
+  //render on screen items 
   render() {
-    console.log(dummyMenu);
+   
     return (
       <>
         <Header  style={{ backgroundColor: '#C1E319' }}>
@@ -113,7 +113,6 @@ class ViewMenuItems extends Component {
                 this.state.userArr.map((item, i) => {
                   return (
                     <ListItem
-                      // onPress={() => this.props.navigation.navigate('MenuForm')}
                       key={i}
                       chevron
                       bottomDivider
@@ -174,8 +173,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   }
 })
-
+//map state to props
 const mapStateToProps = (state) => ({
   logindetails: state.SignInReducer.logindetails
 });
+//export class and connect to redux 
 export default connect(mapStateToProps, { loaderStatus })(ViewMenuItems);

@@ -1,4 +1,4 @@
-//GENERATE ORDER DETAILS
+//GENERATE ORDER DETAILS FOR CAFE AND DRIVER SCREENS
 
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity, PixelRatio,Alert } from 'react-native';
@@ -143,7 +143,7 @@ class OrderMenu extends Component {
                         </TouchableOpacity>
                     </Left>
                     <Body>
-                        <Title>Order Details</Title>
+                        <Title>OrdeR Details</Title>
                     </Body>
                     <Right></Right>
                 </Header>

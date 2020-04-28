@@ -109,13 +109,9 @@ class OrderMenu extends Component {
 
     _calculateTotal = (orderitems) => {
         let total = 0;
-        // console.log("hello");
-        // console.log(JSON.stringify(orderitems[0]));
 
         orderitems.forEach(item => {
-            // console.log("hhh");
-            // console.log(item);
-            // total += item.orderedamount * item.unitcost;
+  
         });
         return total;
         return total;

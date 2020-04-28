@@ -1,3 +1,5 @@
+//screen to create an order
+
 import React, { Component } from 'react';
 import { View, StyleSheet, ScrollView, TextInput, ActivityIndicator, ListView, Text, TouchableOpacity } from 'react-native';
 import * as firebase from 'firebase';
@@ -38,7 +40,7 @@ class OrderMenu extends Component {
       // cafeid: this.props.navigation.getParam('cafeid')
     };
   }
-
+// on press function to navigate to order details
   onPress(item, index) {
     if (item.userArr.length < item.limit) {
       this.props.navigation.navigate("OrderDetails", {

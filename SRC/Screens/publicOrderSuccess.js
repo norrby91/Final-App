@@ -1,3 +1,5 @@
+//creates screen to show order ahs been successful
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -24,19 +26,19 @@ export default class PublicOrderSuccess extends Component {
     super(props);
   }
 
-
+//navigate home 
   backToHome = () => {
     this.props.navigation.navigate('Home')
   }
-
+//on screen load add listener 
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.backToHome);
   }
-
+//  when leavingscreen remove listener 
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.backToHome);
   }
-
+//render success object
   render() {
 
     return (
